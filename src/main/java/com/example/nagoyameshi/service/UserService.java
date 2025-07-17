@@ -148,17 +148,18 @@ public class UserService {
        userRepository.save(user);
    }
    
-// 認証情報のロールを更新する
-   public void refreshAuthenticationByRole(String newRole) {
-       // 現在の認証情報を取得する
-       Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
+	// 認証情報のロールを更新する
+	public void refreshAuthenticationByRole(String newRole) {
+		// 現在の認証情報を取得する
+		Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
 
-       // 新しい認証情報を作成する
-       List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
-       simpleGrantedAuthorities.add(new SimpleGrantedAuthority(newRole));
-       Authentication newAuthentication = new UsernamePasswordAuthenticationToken(currentAuthentication.getPrincipal(), currentAuthentication.getCredentials(), simpleGrantedAuthorities);
+		// 新しい認証情報を作成する
+		List<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
+		simpleGrantedAuthorities.add(new SimpleGrantedAuthority(newRole));
+		Authentication newAuthentication = new UsernamePasswordAuthenticationToken(currentAuthentication.getPrincipal(),
+				currentAuthentication.getCredentials(), simpleGrantedAuthorities);
 
-       // 認証情報を更新する
-       SecurityContextHolder.getContext().setAuthentication(newAuthentication);
-   }
+		// 認証情報を更新する
+		SecurityContextHolder.getContext().setAuthentication(newAuthentication);
+	}
 }
