@@ -147,8 +147,8 @@ public class UserService {
        user.setRole(role);
        userRepository.save(user);
    }
-   
-// 認証情報のロールを更新する
+
+   // 認証情報のロールを更新する
    public void refreshAuthenticationByRole(String newRole) {
        // 現在の認証情報を取得する
        Authentication currentAuthentication = SecurityContextHolder.getContext().getAuthentication();
@@ -161,6 +161,4 @@ public class UserService {
        // 認証情報を更新する
        SecurityContextHolder.getContext().setAuthentication(newAuthentication);
    }
-
-}   
-
+}
