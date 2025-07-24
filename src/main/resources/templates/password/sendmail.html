@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf/org/extras/spring-security">
+<html xmlns="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 	<div th:replace="~{fragment :: meta}"></div>
@@ -27,7 +27,7 @@
 						</div>
 						<form method="post" th:action="@{/password/sendmail}" th:object="${sendEmailInputForm}">
 							<div class="form-group row mb-3 mt-5">
-								<div class="col-mb-5">
+								<div class="col-md-5">
 									<label for="email" class="col-form-label text-md-left fw-bold">
 										<div class="d-flex align-items-center">
 											<span class="me-1">メールアドレス</span>
@@ -38,7 +38,7 @@
 
 								<div class="col-md-7 mb-3">
 									<div th:if="${#fields.hasErrors('email')}" class="text-danger small mb-2"
-										th:errors="{email}"></div>
+										th:errors="*{email}"></div>
 									<input type="text" class="form-control" th:field="*{email}" autocomplete="email"
 										placeholder="taro.samurai@example.com">
 								</div>
