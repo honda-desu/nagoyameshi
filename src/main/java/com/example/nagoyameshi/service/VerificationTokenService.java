@@ -1,5 +1,7 @@
 package com.example.nagoyameshi.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,21 @@ public class VerificationTokenService {
 
        verificationTokenRepository.save(verificationToken);
    }
+   
+   @Transactional
+   public void update(User user, String token) {
+       Optional<VerificationToken> tokenOpt = Optional.ofNullable(verificationTokenRepository.findByUser(user));
+
+       if (tokenOpt.isPresent()) {
+           VerificationToken verificationToken = tokenOpt.get();
+           verificationToken.setToken(token);
+           verificationTokenRepository.save(verificationToken);
+       } else {
+           // トークンが存在しない場合は新規作成する（任意の仕様に応じて調整可能）
+           createVerificationToken(user, token);
+       }
+   }
+
 
    // トークンの文字列で検索した結果を返す
    public VerificationToken findVerificationTokenByToken(String token) {

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.nagoyameshi.entity.Role;
 import com.example.nagoyameshi.entity.User;
+import com.example.nagoyameshi.form.PasswordResetForm;
 import com.example.nagoyameshi.form.SignupForm;
 import com.example.nagoyameshi.form.UserEditForm;
 import com.example.nagoyameshi.repository.RoleRepository;
@@ -90,6 +92,15 @@ public class UserService {
 
        userRepository.save(user);
    }
+   
+   @Transactional
+   public void resetPassword(PasswordResetForm passwordResetForm) {
+	   User user = userRepository.getReferenceById(passwordResetForm.getUserId());
+	   
+	   user.setPassword(passwordEncoder.encode(passwordResetForm.getPassword()));
+	   
+	   userRepository.save(user);
+   }
 
    // メールアドレスが登録済みかどうかをチェックする
    public boolean isEmailRegistered(String email) {
@@ -99,8 +110,9 @@ public class UserService {
 
    // パスワードとパスワード（確認用）の入力値が一致するかどうかをチェックする
    public boolean isSamePassword(String password, String passwordConfirmation) {
-       return password.equals(passwordConfirmation);
-   }
+	    return Objects.equals(password, passwordConfirmation);
+	}
+
    
    // ユーザーを有効にする
    @Transactional
